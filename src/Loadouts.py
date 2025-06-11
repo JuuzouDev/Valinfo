@@ -93,8 +93,8 @@ class Loadouts:
                         final_json[players[i]["Subject"]].update({"AgentArtworkName": agent["displayName"] + "Artwork"})
                         final_json[players[i]["Subject"]].update({"Agent": agent["displayIcon"]})
 
-                for j in range(len(PlayerInventory["Sprays"]["SpraySelections"])):
-                    spray = PlayerInventory["Sprays"]["SpraySelections"][j]
+                spray_selections = PlayerInventory.get("Sprays", {}).get("SpraySelections", [])
+                for j, spray in enumerate(spray_selections):
                     final_json[players[i]["Subject"]]["Sprays"].update({j: {}})
                     for sprayValApi in valoApiSprays.json()["data"]:
                         if spray["SprayID"] == sprayValApi["uuid"]:
@@ -102,7 +102,7 @@ class Loadouts:
                                 "displayName": sprayValApi["displayName"],
                                 "displayIcon": sprayValApi["displayIcon"],
                                 "fullTransparentIcon": sprayValApi["fullTransparentIcon"]
-                                })
+                            })
 
                 final_json[players[i]["Subject"]].update({"Weapons": {}})
                 

@@ -172,3 +172,26 @@ DEFAULT_CONFIG = {
             "discord_rpc": True
         }
     }
+
+agentDict = {
+    "neon": "Neon",
+    "none": "None",
+    "viper": "Viper",
+    "yoru": "Yoru",
+    "astra": "Astra",
+    "breach": "Breach",
+    "brimstone": "Brimstone",
+    "cypher": "Cypher",
+    "jett": "Jett",
+    "kay/o": "KAY/O",
+    "killjoy": "Killjoy",
+    "omen": "Omen",
+    "phoenix": "Phoenix",
+    "raze": "Raze",
+    "reyna": "Reyna",
+    "sage": "Sage",
+    "skye": "Skye",
+    "sova": "Sova",
+    "chamber": "Chamber",
+    "fade": "Fade"
+}

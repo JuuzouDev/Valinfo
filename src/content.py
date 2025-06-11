@@ -34,7 +34,13 @@ class Content():
             map_dict.update({Vmap['mapUrl'].lower(): Vmap['displayName']})
         self.log(f"retrieved map dict: {map_dict}")
         return map_dict
-
+    
+    def roman_to_int(self, roman):
+        roman_dict = {
+            'I':1, 'II':2, 'III':3
+        }
+        return roman_dict.get(roman.upper(),0)
+    
     def get_act_episode_from_act_id(self, act_id):
         final = {
             "act": None,
@@ -43,9 +49,31 @@ class Content():
         act_found = False
         for season in self.content["Seasons"]:
             if season["ID"].lower() == act_id.lower():
-                final["act"] = int(season["Name"][-1])
+                #print(f"[DEBUG] Nombre del season: {season['Name']}")
+                
+                name_upper = season["Name"].upper()
+                
+                if "ACT" in name_upper:
+                    act_part = name_upper.split("ACT")[-1].strip()
+                    final["act"] = self.roman_to_int(act_part)
+                
                 act_found = True
+
             if act_found and season["Type"] == "episode":
-                final["episode"] = int(season["Name"][-1])
+                #print(f"[DEBUG] Episodio candidato encontrado: {season['Name']}")  # NUEVO
+                name_upper = season["Name"].upper()
+                
+                if "EPISODE" in name_upper:
+                    episode_part = name_upper.split("EPISODE")[-1].strip().split(" ")[0]
+                    try: 
+                        final["episode"] = int(episode_part)
+                    except ValueError:
+                        final["episode"] = 0
                 break
+
+        #print(f"[DEBUG] Resultado final para ID {act_id}: Act: {final['act']}, Episode: {final['episode']}")
         return final
+
+
+
+

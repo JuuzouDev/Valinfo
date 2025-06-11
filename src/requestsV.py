@@ -212,3 +212,15 @@ class Requests:
             }
             self.headers = headers
         return self.headers
+    
+    def get_coregame_match_id(self):
+        try:
+            resp = self.fetch("local", "/chat/v4/presences", "GET")
+            for presence in resp["presences"]:
+                if presence["puuid"] == self.puuid:
+                    data = json.loads(base64.b64decode(presence["private"] + "==="))
+                    if data.get("sessionLoopState") == "INGAME":
+                        return data.get("matchID")
+        except Exception as e:
+            self.log(f"Error al obtener match_id: {e}")
+        return None
